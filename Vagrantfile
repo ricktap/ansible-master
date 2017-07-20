@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
 
         # the owner and group are important, in order for the ssh client to read
         # the private keys (must be 600 and therefor can only be read by their owner)
-        config.vm.synced_folder ".vagrant/machines/", "/opt/machines", owner: "ansible", group: "ansible"
+        config.vm.synced_folder ".vagrant/machines/", "/opt/machines", mount_options: ["uid=1400", "gid=1400"]
 
         if ansible_local
         # provision using a local ansible installation on the vm

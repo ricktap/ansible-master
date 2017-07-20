@@ -18,12 +18,14 @@
 - name: create ansible master group
   group:
     name: "{{ master.group }}"
+    gid: 1400
     state: present
 
 - name: create ansible master user with ssh key
   user:
     name: "{{ master.owner }}"
     group: "{{ master.group }}"
+    uid: 1400
     generate_ssh_key: "{{ master.key.generate }}"
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
