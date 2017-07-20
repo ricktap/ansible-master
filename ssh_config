@@ -1,0 +1,13 @@
+Host web
+    HostName 10.10.0.102
+    IdentityFile ~/.ssh/id_web
+
+Host db
+    HostName 10.10.0.103
+    IdentityFile ~/.ssh/id_db
+
+Host test
+    HostName 10.10.0.104
+    IdentityFile ~/.ssh/id_test
+
+
