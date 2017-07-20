@@ -6,7 +6,7 @@ PLAYBOOK=$1
 
 # optional: limit the playbook to specific hosts or groups
 if [ ! -z "$2" ]; then
-    LIMIT=-l $2
+    LIMIT="-l $2"
 fi
 
 # run the provisioning
