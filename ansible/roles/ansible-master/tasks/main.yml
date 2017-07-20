@@ -1,5 +1,6 @@
 ---
-# epel release can't be merged with ansible, as it needs an additional update
+# epel release can't be merged with ansible,
+# as it needs an additional update
 - name: install epel-release
   yum:
     name: epel-release
@@ -26,7 +27,7 @@
     name: "{{ master.owner }}"
     group: "{{ master.group }}"
     uid: 1400
-    generate_ssh_key: "{{ master.key.generate }}"
+    generate_ssh_key: "{{ master.generate_ssh_key }}"
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
 
@@ -45,7 +46,7 @@
     owner: "{{ master.owner }}"
     group: "{{ master.group }}"
     mode: 0600
-  when: master.key.generate
+  when: master.generate_ssh_key
 
 - name: install the ansible master scripts
   template:
@@ -58,4 +59,13 @@
     - provision.sh
     - run_ansible.sh
     - clone_ansible_repo.sh
+
+- name: disable host key checking
+  copy:
+    src: ansible.cfg
+    dest: "/home/{{ master.owner }}/.ansible.cfg"
+    owner: "{{ master.owner }}"
+    group: "{{ master.group }}"
+    mode: 0644
+  when: master.disable_host_key_checking
 

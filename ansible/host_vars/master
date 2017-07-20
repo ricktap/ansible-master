@@ -7,8 +7,8 @@ master:
   repository: https://github.com/ricktap/ansible-mini-test.git
   inventory: hosts
 
+  disable_host_key_checking: True
+  generate_ssh_key: True
+
   defaults:
     playbook: playbook.yml
-
-  key:
-    generate: True
