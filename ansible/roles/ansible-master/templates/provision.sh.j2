@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
+PLAYBOOK=${1:-{{ master.defaults.playbook }}}
+LIMIT=$2
+
 ./clone_ansible_repo.sh
-./run_ansible.sh
+./run_ansible.sh ${PLAYBOOK} ${LIMIT}

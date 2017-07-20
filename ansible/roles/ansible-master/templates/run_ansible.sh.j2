@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-GROUP=${1:-servers}
+# set the playbook
+PLAYBOOK=$1
 
-echo $GROUP
+# optional: limit the playbook to specific hosts or groups
+if [ -z "$2" ]; then
+    LIMIT=-l $2
+fi
 
-cd ansible-mini-test
-
-ansible-playbook -i hosts -l ${GROUP} playbook.yml
+# run the provisioning
+cd deployment
+ansible-playbook -i {{ master.inventory }} ${LIMIT} ${PLAYBOOK}

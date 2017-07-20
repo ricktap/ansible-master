@@ -4,5 +4,11 @@ master:
   owner: ansible
   group: ansible
 
+  repository: https://github.com/ricktap/ansible-mini-test.git
+  inventory: hosts
+
+  defaults:
+    playbook: playbook.yml
+
   key:
     generate: True

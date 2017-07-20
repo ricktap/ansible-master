@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-REPO_URL=https://github.com/ricktap/ansible-mini-test.git
-REPO_DIR=$(echo $REPO_URL | sed -e "s/^.*\/\(.*\)\.git/\1/")
+REPO_URL={{ master.repository }}
+REPO_DIR=deployment
 
-if [ -d ${REPO_DIR}/ ] && [ -d ${REPO_DIR}/.git/  ]
+if [ -d "${REPO_DIR}/" ] && [ -d "${REPO_DIR}/.git/"  ]
 then
-	cd $REPO_DIR
+	cd "${REPO_DIR}"
 	git reset --hard HEAD
 	git remote update -p
 	git merge --ff-only @{u}
 else
-	git clone $REPO_URL
+	git clone "${REPO_URL}" "${REPO_DIR}"
 fi
