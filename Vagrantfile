@@ -30,6 +30,10 @@ Vagrant.configure("2") do |config|
         master.vm.network "private_network", ip: "10.10.0.101"
         master.vm.hostname = "master"
 
+        # the owner and group are important, in order for the ssh client to read
+        # the private keys (must be 600 and therefor can only be read by their owner)
+        config.vm.synced_folder ".vagrant/machines/", "/opt/machines", owner: "ansible", group: "ansible"
+
         if ansible_local
         # provision using a local ansible installation on the vm
             master.vm.provision "ansible_local" do |ansible|
