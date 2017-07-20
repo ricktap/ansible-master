@@ -1,0 +1,8 @@
+---
+master:
+  base_path: /opt/ansible-master
+  owner: ansible
+  group: ansible
+
+  key:
+    generate: True

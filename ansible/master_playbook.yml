@@ -1,0 +1,6 @@
+---
+- hosts: master
+  remote_user: vagrant
+  become: yes
+  roles:
+    - ansible-master

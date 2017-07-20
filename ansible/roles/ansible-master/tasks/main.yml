@@ -1,0 +1,59 @@
+---
+# epel release can't be merged with ansible, as it needs an additional update
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: latest
+    update_cache: yes
+
+- name: install dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - git
+    - ansible
+
+- name: create ansible master group
+  group:
+    name: "{{ master.group }}"
+    state: present
+
+- name: create ansible master user with ssh key
+  user:
+    name: "{{ master.owner }}"
+    group: "{{ master.group }}"
+    generate_ssh_key: "{{ master.key.generate }}"
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+
+- name: create the ansible master directory
+  file:
+    name: "{{ master.base_path }}"
+    state: directory
+    owner: "{{ master.owner }}"
+    group: "{{ master.group }}"
+
+- name: copy the ansible master pubkey
+  copy:
+    src: "/home/{{ master.owner }}/.ssh/id_rsa.pub"
+    dest: "{{ master.base_path }}/ansible_master_rsa.pub"
+    remote_src: yes
+    owner: "{{ master.owner }}"
+    group: "{{ master.group }}"
+    mode: 0600
+  when: master.key.generate
+
+- name: install the ansible master scripts
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ master.base_path }}/{{ item }}"
+    owner: "{{ master.owner }}"
+    group: "{{ master.group }}"
+    mode: "0740"
+  with_items:
+    - provision.sh
+    - run_ansible.sh
+    - clone_ansible_repo.sh
+

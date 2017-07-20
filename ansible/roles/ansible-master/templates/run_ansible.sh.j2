@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+GROUP=${1:-servers}
+
+echo $GROUP
+
+cd ansible-mini-test
+
+ansible-playbook -i hosts -l ${GROUP} playbook.yml

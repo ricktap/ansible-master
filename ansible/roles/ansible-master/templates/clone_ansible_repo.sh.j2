@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+REPO_URL=https://github.com/ricktap/ansible-mini-test.git
+REPO_DIR=$(echo $REPO_URL | sed -e "s/^.*\/\(.*\)\.git/\1/")
+
+if [ -d ${REPO_DIR}/ ] && [ -d ${REPO_DIR}/.git/  ]
+then
+	cd $REPO_DIR
+	git reset --hard HEAD
+	git remote update -p
+	git merge --ff-only @{u}
+else
+	git clone $REPO_URL
+fi
